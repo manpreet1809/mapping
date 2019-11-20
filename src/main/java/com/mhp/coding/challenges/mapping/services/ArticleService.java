@@ -1,14 +1,17 @@
 package com.mhp.coding.challenges.mapping.services;
 
+import com.mhp.coding.challenges.mapping.exception.ArticleIdNotFound;
 import com.mhp.coding.challenges.mapping.mappers.ArticleMapper;
 import com.mhp.coding.challenges.mapping.models.db.Article;
 import com.mhp.coding.challenges.mapping.models.dto.ArticleDto;
 import com.mhp.coding.challenges.mapping.repositories.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class ArticleService {
@@ -25,14 +28,15 @@ public class ArticleService {
 
     public List<ArticleDto> list() {
         final List<Article> articles = repository.all();
-        //TODO
-        return new ArrayList<>();
+        return articles.stream().map(mapper::map).collect(toList());
     }
 
     public ArticleDto articleForId(Long id) {
         final Article article = repository.findBy(id);
-        //TODO
-        return new ArticleDto();
+        if(StringUtils.isEmpty(article)){
+            throw new ArticleIdNotFound("Article not found");
+        }
+        return mapper.map(article);
     }
 
     public ArticleDto create(ArticleDto articleDto) {

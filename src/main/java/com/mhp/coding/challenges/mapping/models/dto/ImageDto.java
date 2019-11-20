@@ -10,6 +10,12 @@ public class ImageDto {
 
     private ImageSize imageSize;
 
+    public ImageDto(Long id, String url, ImageSize imageSize) {
+        this.id = id;
+        this.url = url;
+        this.imageSize = imageSize;
+    }
+
     public String getUrl() {
         return url;
     }

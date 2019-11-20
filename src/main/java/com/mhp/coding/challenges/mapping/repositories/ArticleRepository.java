@@ -10,9 +10,9 @@ import java.util.*;
 
 @Component
 public class ArticleRepository {
+    final List<Article> result = new ArrayList<>();
 
-    public List<Article> all(){
-        final List<Article> result = new ArrayList<>();
+    public List<Article> all() {
         result.add(createDummyArticle(1001L));
         result.add(createDummyArticle(2002L));
         result.add(createDummyArticle(3003L));
@@ -21,11 +21,16 @@ public class ArticleRepository {
         return result;
     }
 
-    public Article findBy(Long id){
-        return createDummyArticle(id);
+    public Article findBy(Long id) {
+        for (Article article : this.result) {
+            if (id.equals(article.getId())) {
+                return article;
+            }
+        }
+        return null;
     }
 
-    public void create(Article article){
+    public void create(Article article) {
         //Ignore
     }
 
@@ -41,7 +46,7 @@ public class ArticleRepository {
         return result;
     }
 
-    private Set<ArticleBlock> createBlocks(Long articleId){
+    private Set<ArticleBlock> createBlocks(Long articleId) {
         final Set<ArticleBlock> result = new HashSet<>();
 
         final TextBlock textBlock = new TextBlock();
@@ -51,7 +56,7 @@ public class ArticleRepository {
 
         final ImageBlock imageBlock = new ImageBlock();
         imageBlock.setImage(createImage(1L));
-        textBlock.setSortIndex(1);
+        imageBlock.setSortIndex(1);
         result.add(imageBlock);
 
         final TextBlock secondTextBlock = new TextBlock();
@@ -84,13 +89,13 @@ public class ArticleRepository {
         return result;
     }
 
-    private Image createImage(Long imageId){
+    private Image createImage(Long imageId) {
         final Image result = new Image();
         result.setId(imageId);
         result.setLastModified(new Date());
         result.setLastModifiedBy("Max Mustermann");
         result.setImageSize(ImageSize.LARGE);
         result.setUrl("https://someurl.com/image/" + imageId);
-        return null;
+        return result;
     }
 }
