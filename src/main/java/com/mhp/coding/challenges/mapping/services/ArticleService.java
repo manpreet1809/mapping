@@ -7,7 +7,6 @@ import com.mhp.coding.challenges.mapping.models.dto.ArticleDto;
 import com.mhp.coding.challenges.mapping.repositories.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class ArticleService {
 
     public ArticleDto articleForId(Long id) {
         final Article article = repository.findBy(id);
-        if(StringUtils.isEmpty(article)){
+        if(article == null){
             throw new ArticleIdNotFound("Article not found");
         }
         return mapper.map(article);

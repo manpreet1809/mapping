@@ -12,12 +12,16 @@ import java.util.*;
 public class ArticleRepository {
     final List<Article> result = new ArrayList<>();
 
-    public List<Article> all() {
+    public ArticleRepository() {
         result.add(createDummyArticle(1001L));
         result.add(createDummyArticle(2002L));
         result.add(createDummyArticle(3003L));
         result.add(createDummyArticle(4004L));
         result.add(createDummyArticle(5005L));
+    }
+
+
+    public List<Article> all() {
         return result;
     }
 
